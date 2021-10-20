@@ -2,10 +2,7 @@ package com.core;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import twitter4j.Query;
-import twitter4j.QueryResult;
-import twitter4j.Status;
-import twitter4j.TwitterException;
+import twitter4j.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,4 +34,10 @@ public class Handler {
                 .map(item -> item.getText())
                 .collect(Collectors.toList());
     }
+
+    public void streamFeed(){
+        TwitterStream twitterStream = connection.getStreamInstance();
+        twitterStream.sample();
+    }
+
 }

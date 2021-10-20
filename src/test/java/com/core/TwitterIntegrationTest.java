@@ -50,5 +50,8 @@ public class TwitterIntegrationTest {
         log.info((handler.searchTimeline("test")).toString());
     }
 
-
+    @Test
+    public void GivenValidAccount_WhenListeningForStream_ThenNoException() {
+        handler.streamFeed();
+    }
 }
