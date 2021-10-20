@@ -1,5 +1,6 @@
 package com.core;
 
+import lombok.extern.java.Log;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,6 +12,7 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import twitter4j.TwitterException;
 
+@Log
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes={TwitterConfig.class})
 @TestPropertySource(value="twitter.properties")
@@ -23,6 +25,10 @@ public class TwitterIntegrationTest {
     @Autowired
     Handler handler;
 
+    @Before
+    public void setUp(){
+        handler.connect();
+    }
 
     @Test
     public void GivenValidAccount_WhenRetrievingTwitterClient_ThenNoException(){
@@ -31,7 +37,18 @@ public class TwitterIntegrationTest {
 
     @Test
     public void GivenString_WhenSubmitTweet_ThenNoException() throws TwitterException {
-        handler.connect();
         handler.postTweet("Tester tweet.");
     }
+
+    @Test
+    public void GivenValidAccount_WhenRetrievingTwitterTimeline_ThenNoException() throws TwitterException {
+        log.info((handler.getTimeline()).toString());
+    }
+
+    @Test
+    public void GivenQuery_WhenSearchingTwitterTimeline_ThenReturnResult_AndNoException() throws TwitterException {
+        log.info((handler.searchTimeline("test")).toString());
+    }
+
+
 }
