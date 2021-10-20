@@ -24,19 +24,20 @@ public class Connectivity {
     @Value("${madeleine.accessTokenSecret}")
     String accessTokenSecret;
 
-    @Autowired
-    public Connectivity() {
+    public Twitter buildConnection(){
         cb = new ConfigurationBuilder();
         cb.setDebugEnabled(true)
                 .setOAuthConsumerKey(consumerKey)
                 .setOAuthConsumerSecret(consumerKeySecret)
                 .setOAuthAccessToken(accessToken)
                 .setOAuthAccessTokenSecret(accessTokenSecret);
-    }
 
-    public Twitter buildConnection(){
         TwitterFactory tf = new TwitterFactory(cb.build());
         twitter = tf.getInstance();
+        return twitter;
+    }
+
+    public Twitter getInstance() {
         return twitter;
     }
 
