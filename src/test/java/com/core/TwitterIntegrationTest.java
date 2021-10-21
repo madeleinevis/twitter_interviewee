@@ -15,7 +15,7 @@ import twitter4j.TwitterException;
 @Log
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes={TwitterConfig.class})
-@TestPropertySource(value="twitter.properties")
+@TestPropertySource(value="classpath:twitter.properties")
 @SpringBootTest(classes={Connectivity.class, Handler.class})
 public class TwitterIntegrationTest {
 

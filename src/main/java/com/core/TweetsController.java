@@ -1,11 +1,18 @@
 package com.core;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.google.gson.Gson;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import twitter4j.TwitterException;
+
+import java.util.List;
 
 @RestController
 public class TweetsController {
+
+    Gson gson = new Gson();
+    @Autowired
+    Handler handler;
 
     @GetMapping("/")
     public String index(){
@@ -19,8 +26,14 @@ public class TweetsController {
     }
 
     //TODO: Get tweets
-    @GetMapping("/get")
-    public String getAll(){
+    @RequestMapping("/get")
+    public String getAll(){ // TODO: specify user
+        try {
+            List<String> tweets = handler.getTimeline();
+            return gson.toJson(tweets);
+        }catch(TwitterException e){
+            e.printStackTrace();
+        }
         return "Getting Tweets.";
     }
 
