@@ -9,6 +9,8 @@ import twitter4j.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static java.lang.Thread.sleep;
+
 @Log
 @PropertySource(value="classpath:twitter.properties")
 @Component
@@ -23,12 +25,6 @@ public class Handler {
     public void run(){
         connect();
         streamFeed();
-        try {
-            log.info("Timeline: " + getTimeline().toString());
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-
     }
 
 
@@ -56,7 +52,13 @@ public class Handler {
 
     public void streamFeed(){
         twitterStream = connection.getStreamInstance();
-        twitterStream.sample();
+    }
+
+    public void updateTwitterStreamFiltering(String keyword){
+        String [] keywords = keyword.split(" ");
+        FilterQuery filter = new FilterQuery();
+        filter.track(keywords);
+        twitterStream.filter(filter);
     }
 
 }
