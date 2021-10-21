@@ -1,17 +1,16 @@
 package com.core;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import twitter4j.*;
 import twitter4j.conf.Configuration;
 import twitter4j.conf.ConfigurationBuilder;
 
+@Log
 @Component
 public class Connectivity {
     Configuration config;
-    Twitter twitter;
-    TwitterStream twitterStream;
 
     @Value("${madeleine.consumerKey}")
     String consumerKey;
@@ -28,11 +27,7 @@ public class Connectivity {
     public Twitter buildConnection(){
         if(config == null) setCb();
         TwitterFactory tf = new TwitterFactory(config);
-        twitter = tf.getInstance();
-        return twitter;
-    }
-
-    public Twitter getInstance() {
+        Twitter twitter = tf.getInstance();
         return twitter;
     }
 
@@ -41,26 +36,37 @@ public class Connectivity {
             @Override
             public void onStatus(Status status) {
                 // TODO: have a print statement to see the tweets
+                log.info("STATUS: " + status.getText());
             }
 
             @Override
-            public void onDeletionNotice(StatusDeletionNotice statusDeletionNotice) {}
+            public void onDeletionNotice(StatusDeletionNotice statusDeletionNotice) {
+                log.info("STATUS DELETION: " + statusDeletionNotice.getStatusId());
+            }
 
             @Override
-            public void onTrackLimitationNotice(int i) {}
+            public void onTrackLimitationNotice(int i) {
+                log.info("TRACK LIMITATION NOTICE: " + i);
+            }
 
             @Override
-            public void onScrubGeo(long l, long l1) {}
+            public void onScrubGeo(long l, long l1) {
+                log.info("SCRUB GEO EVENT: UserID: " + l + " UpToStatusID: " + l1);
+            }
 
             @Override
-            public void onStallWarning(StallWarning stallWarning) {}
+            public void onStallWarning(StallWarning stallWarning) {
+                log.info("GOT STALL WARNING: " + stallWarning);
+            }
 
             @Override
-            public void onException(Exception e) {}
+            public void onException(Exception e) {
+                e.printStackTrace();
+            }
         };
         if(config == null) setCb();
         TwitterStreamFactory tsf = new TwitterStreamFactory(config);
-        twitterStream = tsf.getInstance();
+        TwitterStream twitterStream = tsf.getInstance();
         twitterStream.addListener(listener);
         return twitterStream;
     }
