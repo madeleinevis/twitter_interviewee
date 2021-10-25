@@ -1,9 +1,8 @@
-package com.core;
+package com.fourjcore;
 
 import lombok.extern.java.Log;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,44 +13,44 @@ import twitter4j.TwitterException;
 
 @Log
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes={TwitterConfig.class})
+@ContextConfiguration(classes={TTwitterConfig.class})
 @TestPropertySource(value="classpath:twitter.properties")
-@SpringBootTest(classes={Connectivity.class, Handler.class})
+@SpringBootTest(classes={TConnectivity.class, THandler.class})
 public class TwitterIntegrationTest {
 
     @Autowired
-    Connectivity connectivity;
+    TConnectivity TConnectivity;
 
     @Autowired
-    Handler handler;
+    THandler tHandler;
 
     @Before
     public void setUp(){
-        handler.connect();
+        tHandler.connect();
     }
 
     @Test
     public void GivenValidAccount_WhenRetrievingTwitterClient_ThenNoException(){
-        connectivity.buildConnection();
+        TConnectivity.buildConnection();
     }
 
     @Test
     public void GivenString_WhenSubmitTweet_ThenNoException() throws TwitterException {
-        handler.postTweet("Tester tweet.");
+        tHandler.postTweet("Tester tweet.");
     }
 
     @Test
     public void GivenValidAccount_WhenRetrievingTwitterTimeline_ThenNoException() throws TwitterException {
-        log.info((handler.getTimeline()).toString());
+        log.info((tHandler.getTimeline()).toString());
     }
 
     @Test
     public void GivenQuery_WhenSearchingTwitterTimeline_ThenReturnResult_AndNoException() throws TwitterException {
-        log.info((handler.searchTimeline("test")).toString());
+        log.info((tHandler.searchTimeline("test")).toString());
     }
 
     @Test
     public void GivenValidAccount_WhenListeningForStream_ThenNoException() {
-        handler.streamFeed();
+        tHandler.streamFeed();
     }
 }

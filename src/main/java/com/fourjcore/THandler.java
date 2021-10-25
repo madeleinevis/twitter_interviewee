@@ -1,4 +1,4 @@
-package com.core;
+package com.fourjcore;
 
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +14,10 @@ import static java.lang.Thread.sleep;
 @Log
 @PropertySource(value="classpath:twitter.properties")
 @Component
-public class Handler {
+public class THandler {
 
     @Autowired
-    private Connectivity connection;
+    private TConnectivity connection;
 
     Twitter twitter;
     TwitterStream twitterStream;
