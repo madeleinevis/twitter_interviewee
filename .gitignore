@@ -27,3 +27,4 @@ target
 twitter_interviewee.pem
 private_key.ppk
 src/main/resources/com/core/twitter.properties
+rootkey.csv

@@ -1,5 +1,6 @@
 package com;
 
+import com.core.Handler;
 import com.fourjcore.THandler;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -10,8 +11,8 @@ public class Application {
 
     public static void main(String[] args){
         ConfigurableApplicationContext configurableApplicationContext = SpringApplication.run(Application.class, args);
-        THandler tHandler = configurableApplicationContext.getBean(THandler.class);
-        tHandler.run();
+        Handler handler = configurableApplicationContext.getBean(Handler.class);
+        handler.run();
 //        SpringApplication.run(Application.class, args);
     }
 }
