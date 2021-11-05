@@ -1,11 +1,12 @@
 import axios from "axios";
+import URL from "./URL";
 
 const PostTweet = () => {
     function handlePost(e) {
         let formData = new FormData();
         formData.append('username', sessionStorage.getItem('user'));
         formData.append('tweet', e.target.form.tweet.value)
-        axios.post('http://localhost:8080/post', formData)
+        axios.post(`${URL}/post`, formData)
             .then(response => {
                 console.log(response.data);
             })

@@ -3,6 +3,7 @@ import axios from "axios";
 
 import Tweets from './Tweets'
 import PostTweet from "./PostTweet";
+import URL from "./URL";
 
 const Dashboard = () => {
     const [show, setShow] = useState(false);
@@ -10,14 +11,14 @@ const Dashboard = () => {
     const [tweets, setTweets] = useState([]);
 
     if(sessionStorage.getItem('user') === null){
-        window.location.href='/login';
+        window.location.href='/#/login';
     }
 
     function handleGet() {
         setShow(true);
         let formData = new FormData();
         formData.append('username', sessionStorage.getItem('user'));
-        axios.post('http://localhost:8080/getAll', formData)
+        axios.post(`${URL}/getAll`, formData)
             .then(response => {
                 console.log(response.data);
                 setTweets(response.data);
@@ -36,7 +37,7 @@ const Dashboard = () => {
 
     function logOut(){
         sessionStorage.setItem('user', null);
-        window.location.href='/login';
+        window.location.href='/#/login';
     }
 
 

@@ -1,15 +1,16 @@
 import axios from "axios";
+import URL from "./URL";
 
 function Login() {
     function handleSubmit(e) {
         let formData = new FormData();
         formData.append('username', e.target.form.username.value);
         formData.append('password', e.target.form.password.value);
-        axios.post('http://localhost:8080/login', formData)
+        axios.post(`${URL}/login`, formData)
             .then(response => {
                 console.log("response", response);
                 sessionStorage.setItem('user', e.target.form.username.value);
-                window.location.href='/dashboard';
+                window.location.href='/#/dashboard';
             })
             .catch(function(error){
                 if(error.response){

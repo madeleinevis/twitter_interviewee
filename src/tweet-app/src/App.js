@@ -1,6 +1,6 @@
 // import logo from './logo.svg';
 import './App.css';
-import {Route, BrowserRouter as Router, Switch} from "react-router-dom";
+import {Route, Switch, Redirect, HashRouter} from "react-router-dom";
 import {Fragment} from "react";
 
 import Login from './Components/Login';
@@ -10,16 +10,19 @@ import Dashboard from './Components/Dashboard';
 const App = () => {
     return (
         <Fragment>
-            <Router>
+            <HashRouter>
                 <Switch>
+                    <Route exact path="/">
+                        <Redirect to={"/login"}/>
+                    </Route>
                     <Route exact path="/login">
                         <Login/>
                     </Route>
-                    <Route path="/dashboard">
+                    <Route exact path="/dashboard">
                         <Dashboard />
                     </Route>
                 </Switch>
-            </Router>
+            </HashRouter>
         </Fragment>
     );
 }
