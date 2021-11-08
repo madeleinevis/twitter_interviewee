@@ -4,11 +4,13 @@ import axios from "axios";
 import Tweets from './Tweets'
 import PostTweet from "./PostTweet";
 import URL from "./URL";
+import Timeline from "./Timeline";
 
 const Dashboard = () => {
     const [show, setShow] = useState(false);
 
     const [tweets, setTweets] = useState([]);
+    const [timeline, setTimeline] = useState([]);
 
     if(sessionStorage.getItem('user') === null){
         window.location.href='/#/login';
@@ -29,6 +31,20 @@ const Dashboard = () => {
                 }
             })
 
+    }
+
+    function getTimeline() {
+        let formData = new FormData();
+        axios.post(`${URL}/timeline`, formData)
+            .then(response => {
+                console.log(response.data);
+                setTimeline(response.data);
+            })
+            .catch(function(error){
+                if(error.response){
+                    console.log(error.response.status);
+                }
+            })
     }
 
     function handlePost(){
@@ -54,6 +70,9 @@ const Dashboard = () => {
                                 <button onClick={handlePost}>Post Tweet</button>
                             </li>
                             <li>
+                                <button onClick={getTimeline}>Get/Update Timeline</button>
+                            </li>
+                            <li>
                                 <button onClick={logOut}>Log Out</button>
                             </li>
                         </ul>
@@ -65,6 +84,9 @@ const Dashboard = () => {
             :
                 <PostTweet/>
             }
+            <div>
+                <Timeline items={timeline}/>
+            </div>
         </Fragment>
     )
 }

@@ -4,7 +4,9 @@ const Tweets = (tweetList) => {
     if(tweets === {}) {
         return <p>No Tweets made by the user.</p>
     }else {
-        Object.entries(tweets).map(([key, value]) => console.log(key, value[0], value[1]));
+        // Object.entries(tweets).map(([key, value]) => console.log(key, value[0], value[1]));
+        // Object.entries(tweets).map(([key, [tID, tweet, timestamp]]) => console.log([tID, tweet, timestamp]));
+        tweets.map(({timestamp, tweet, tweetID}) => console.log({timestamp, tweet, tweetID}));
         return (<table>
             <thead>
                 <tr>
@@ -14,13 +16,13 @@ const Tweets = (tweetList) => {
                 </tr>
             </thead>
             <tbody>
-                {Object.entries(tweets).map(([key, value]) => {
-                    return (<tr>
-                    <td>{key}</td>
-                    <td>{value[0]}</td>
-                    <td>{value[1]}</td>
-                    </tr>)
-                })}
+            {tweets.map(({timestamp, tweet, tweetID}) => {
+                return (<tr>
+                    <td>{tweetID}</td>
+                    <td>{tweet}</td>
+                    <td>{timestamp}</td>
+                </tr>);
+            })}
             </tbody>
         </table>);
     }
